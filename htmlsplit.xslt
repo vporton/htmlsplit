@@ -35,6 +35,7 @@
 
   <xsl:variable name="toc-filename" select="($user-settings/*/toc-filename, $system-settings/*/toc-filename)[1]/text()"/>
   <xsl:variable name="chapter-filename" select="($user-settings/*/chapter-filename, $system-settings/*/chapter-filename)[1]/node()"/>
+  <xsl:variable name="toc-list-tag" select="($user-settings/*/toc-list-tag, $system-settings/*/toc-list-tag)[1]/node()"/>
 
   <!-- By default if the document has more than one <h1> use 'h1', otherwise 'h2'. -->
   <xsl:variable name="chapter-tag-configured" select="($user-settings/chapter-tag, $system-settings/chapter-tag)[1]/text()"/>
@@ -268,12 +269,11 @@
   </xsl:template>
 
   <xsl:template name="output-toc-inner">
-    <!-- TODO: Support other list types. -->
-    <ul>
+    <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$toc-list-tag}">
       <xsl:for-each select="$preprocessed-input/*">
         <li><a href="{@filename}"><xsl:copy-of select="html:*[local-name() eq $chapter-tag]/node()"/></a></li>
       </xsl:for-each>
-    </ul>
+    </xsl:element>
   </xsl:template>
 
   <!-- Output a chapter -->

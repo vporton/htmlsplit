@@ -4,6 +4,7 @@
   <chapter-tag/> <!-- not specified, use heuristics -->
   <toc-filename>toc.html</toc-filename>
   <chapter-filename>chapter<number/>.html</chapter-filename>
+  <toc-list-tag>ol</toc-list-tag>
   <generic-page>
     <files>
       <wrapper>tmpl/wrapper.xml</wrapper> <!-- main file -->
