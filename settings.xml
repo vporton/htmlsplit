@@ -1,0 +1,28 @@
+<?xml version="1.1"?>
+<settings xmlns:split = "http://portonvictor.org/ns/split">
+  <!-- Settings in <chapter-page> and <toc-page> take precedence over settings in <generic-page>. -->
+  <chapter-tag/> <!-- not specified, use heuristics -->
+  <toc-filename>toc.html</toc-filename>
+  <chapter-filename>chapter<number/>.html</chapter-filename>
+  <generic-page>
+    <files>
+      <wrapper>tmpl/wrapper.xml</wrapper> <!-- main file -->
+    </files>
+  </generic-page>
+  <chapter-page>
+    <header><split:doc-title/>: <split:chapter-title/></header> <!-- for using in <h1> or <h2> -->
+    <macros>
+      <full-title><split:doc-title/>: <split:chapter-title/></full-title> <!-- for using in <title> -->
+    </macros>
+    <files>
+    </files>
+  </chapter-page>
+  <toc-page>
+    <header><split:doc-title/>: Table of content</header> <!-- for using in <h1> or <h2> -->
+    <macros>
+      <full-title>Toc of <split:doc-title/></full-title> <!-- for using in <title> -->
+    </macros>
+    <files>
+    </files>
+  </toc-page>
+</settings>

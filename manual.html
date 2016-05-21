@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<html xmlns = "http://www.w3.org/1999/xhtml">
+  <head>
+    <title>HTML-split XSLT templates</title>
+    <style type="text/css">
+      body { background: #fef }
+    </style>
+  </head>
+  <body>
+    <h1>HTML-split XSLT templates</h1>
+
+    <h2>Introduction</h2>
+
+    <p><em>HTML-split XSLT templates</em> is a set of XSLT templates (a program written in XSLT programming language),
+      which splits an XHTML file into several <q>chapters</q> and also creates a table of content (ToC).</p>
+
+    <p>It is fully configurable and themeable with config files and XML templates.</p>
+
+    <p>However, this version 0.1 is yet preliminary and untested. Instructions on installation and use are partial.</p>
+
+    <h2>Running HTML-split</h2>
+
+    <p>To run HTML-split you need an XSLT 2.0 processor. It was tested only with
+      <a href="http://www.saxonica.com/download/opensource.xml">Saxon-HE (Home Edition)</a> XSLT processor.</p>
+
+    <p>You can run it as follows:</p>
+
+    <pre>saxonb-xslt -ext:on -xsl:htmlsplit.xslt -s:manual.html output-directory=out</pre>
+
+    <p>In this example, <code>htmlsplit.xslt</code> is my program, <code>manual.html</code> is input XHTML file
+      and <code>out</code> is the directory where output files will be laid.</p>
+
+    <h2>Configuration</h2>
+
+    <p>HTML-split accepts two configuration parameters: <code>output-directory</code> descibed above and
+      <code>config-filename</code>, the URL of an XML file containing all the rest of configuration parameters.
+      If you don't provide <code>config-filename</code>, the default configuration from <code>settings.xml</code> file
+      distributed with this software is used.</p>
+
+    <p>See that file for an example of configuration.</p>
+
+    <p>The following a configuration parameters:</p>
+
+    <dl>
+      <dt><code>chapter-tag</code></dt>
+      <dd>Should be either <code>h1</code> or <code>h2</code>. If no value is provided, the program uses the following heuristics:
+        if the document has more than one <code>&lt;h1&gt;</code> use 'h1', otherwise 'h2'.</dd>
+      <dt><code>toc-filename</code></dt>
+      <dd>The filename of the created ToC</dd>
+      <dt><code>chapter-filename</code></dt>
+      <dd>The filenames of the created chapter files. <code>&lt;number/&gt;</code> is replaced by chapter number (starting from one).</dd>
+      <dt><code>toc-page</code>, and <code>chapter-page</code>, <code>generic-page</code></dt>
+      <dd>Configuration for outputted ToC-files, chapter files, and generic fallback applied to both ToC and chapter files,
+        if some settings is not explicitly set for ToC-files or chapter files.</dd>
+    </dl>
+
+    <p>The following a page configuration parameters (inside <code>toc-page</code>, and <code>chapter-page</code>, or <code>generic-page</code>):</p>
+
+    <dl>
+      <dt><code>header</code></dt>
+      <dd>What is put inside <code>&lt;h1&gt;</code> or <code>&lt;h2&gt;</code> header tags (it supports tempalte tags described below).</dd>
+      <dt><code>macros</code></dt>
+      <dd>A list of macroses which can be used in templates.</dd>
+      <dt><code>files</code></dt>
+      <dd>A list of include files which can be used in templates. The file <code>wrapper</code> is special and is used as the main templates
+        for chapters and ToCs.</dd>
+    </dl>
+
+    <h2>Template <code>wrapper</code></h2>
+
+    <p>For <code>wrapper</code> template the following substitutions work. (Macroses inside other macroses do work.)</p>
+
+    <dl>
+      <dt><code>&lt;split:doc-title/&gt;</code></dt>
+      <dd>Substituted with title of the input XHTML file.</dd>
+      <dt><code>&lt;split:chapter-title/&gt;</code></dt>
+      <dd>Substituted with title of the current chapter.</dd>
+      <dt><code>&lt;split:macro name="<em>NAME</em>"/&gt;</code></dt>
+      <dd>Substituted with macro (defined in the settings file) with name <em>NAME</em>.</dd>
+      <dt><code>&lt;split:insert-file alias="<em>ALIAS</em>"/&gt;</code></dt>
+      <dd>Substituted with the content of file (defined in the settings file) with alias <em>ALIAS</em>.</dd>
+      <dt><code>&lt;split:make-chapter-header/&gt;</code></dt>
+      <dd>It makes <code>&lt;h1&gt;</code> or <code>&lt;h2&gt;</code> (dependently on the settings) header.</dd>
+      <dt><code>&lt;split:content/&gt;</code></dt>
+      <dd>Here the chapter content or the list of chapters in ToC goes.</dd>
+      <dt><code>&lt;split:next&gt;&#8230;&lt;/split:next&gt;</code></dt>
+      <dd>Replaced by <code>&lt;a href="<em>NEXT-CHAPTER</em>"&gt;&#8230;&lt;/a&gt;</code> or nothing if there is no next chapter.</dd>
+      <dt><code>&lt;split:prev&gt;&#8230;&lt;/split:prev&gt;</code></dt>
+      <dd>Replaced by <code>&lt;a href="<em>PREV-CHAPTER</em>"&gt;&#8230;&lt;/a&gt;</code> or nothing if there is no previous chapter.</dd>
+    </dl>
+
+    <p>Note that ToC is counted as the first (or zeroth, if you prefer) chapter.</p>
+
+  </body>
+</html>
