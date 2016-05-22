@@ -5,14 +5,22 @@
   </head>
   <body>
     <p>
-      <split:prev>&lt;&lt; Prev</split:prev>
-      <split:next>Next &gt;&gt;</split:next>
+      <split:if test="has-prev"><split:prev>&lt;&lt; Prev</split:prev></split:if>
+      <split:unless test="has-prev">&lt;&lt; Prev</split:unless>
+      <split:unless test="toc"><split:toc>ToC</split:toc></split:unless>
+      <split:if test="toc">ToC</split:if>
+      <split:if test="has-next"><split:next>Next &gt;&gt;</split:next></split:if>
+      <split:unless test="has-next">Next &gt;&gt;</split:unless>
     </p>
     <split:make-chapter-header/> <!-- either <h1> or <h2> -->
     <split:content/>
     <p>
-      <split:prev>&lt;&lt; Prev</split:prev>
-      <split:next>Next &gt;&gt;</split:next>
+      <split:if test="has-prev"><split:prev>&lt;&lt; Prev</split:prev></split:if>
+      <split:unless test="has-prev">&lt;&lt; Prev</split:unless>
+      <split:unless test="toc"><split:toc>ToC</split:toc></split:unless>
+      <split:if test="toc">ToC</split:if>
+      <split:if test="has-next"><split:next>Next &gt;&gt;</split:next></split:if>
+      <split:unless test="has-next">Next &gt;&gt;</split:unless>
     </p>
     <split:insert-file alias="footer"/>
   </body>

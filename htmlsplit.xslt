@@ -254,6 +254,45 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template mode="wrapper" match="split:toc">
+    <a href="{$toc-filename}">
+      <xsl:apply-templates select="@*|node()"/>
+    </a>
+  </xsl:template>
+
+  <xsl:template mode="wrapper" match="split:if">
+    <xsl:variable name="condition">
+      <xsl:apply-templates mode="condition" select="@*"/>
+    </xsl:variable>
+    <xsl:if test="$condition ne ''">
+      <xsl:apply-templates mode="wrapper" select="node()"/>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="wrapper" match="split:unless">
+    <xsl:variable name="condition">
+      <xsl:apply-templates mode="condition" select="@*"/>
+    </xsl:variable>
+    <xsl:if test="$condition eq ''">
+      <xsl:apply-templates mode="wrapper" select="node()"/>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="condition" match="@test[. eq 'toc']">
+    <xsl:param name="is-toc" tunnel="yes"/>
+    <xsl:copy-of select="$is-toc"/>
+  </xsl:template>
+
+  <xsl:template mode="condition" match="@test[. eq 'has-next']">
+    <xsl:param name="next-uri" tunnel="yes"/>
+    <xsl:copy-of select="if($next-uri) then '1' else ''"/>
+  </xsl:template>
+
+  <xsl:template mode="condition" match="@test[. eq 'has-prev']">
+    <xsl:param name="prev-uri" tunnel="yes"/>
+    <xsl:copy-of select="if($prev-uri) then '1' else ''"/>
+  </xsl:template>
+
   <!-- ToC output -->
 
   <xsl:template name="output-toc">
@@ -261,6 +300,7 @@
       <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($toc-settings-files, 'wrapper'))">
         <xsl:with-param name="filetype" select="'toc'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="$preprocessed-input/*[1]/@filename" tunnel="yes"/>
+        <xsl:with-param name="is-toc" select="1" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$toc-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$toc-settings-macros" tunnel="yes"/>
         <xsl:with-param name="settings-header" select="$toc-settings-header" tunnel="yes"/>
@@ -287,6 +327,7 @@
         <xsl:with-param name="filetype" select="'chapter'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="following-sibling::*[1]/@filename" tunnel="yes"/>
         <xsl:with-param name="prev-uri" select="(preceding-sibling::*[1]/@filename, $toc-filename)[1]" tunnel="yes"/>
+        <xsl:with-param name="is-toc" select="''" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$chapter-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$chapter-settings-macros" tunnel="yes"/>
         <xsl:with-param name="settings-header" select="$chapter-settings-header" tunnel="yes"/>

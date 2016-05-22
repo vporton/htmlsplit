@@ -52,7 +52,7 @@
       <dt><code>toc-page</code>, and <code>chapter-page</code>, <code>generic-page</code></dt>
       <dd>Configuration for outputted ToC-files, chapter files, and generic fallback applied to both ToC and chapter files,
         if some settings is not explicitly set for ToC-files or chapter files.</dd>
-      <dt>toc-list-tag</dt>
+      <dt><code>toc-list-tag</code></dt>
       <dd><code>ol</code> or <code>ul</code>, the HTML tag used to list chapters in ToC</dd>
     </dl>
 
@@ -89,6 +89,21 @@
       <dd>Replaced by <code>&lt;a href="<em>NEXT-CHAPTER</em>"&gt;&#8230;&lt;/a&gt;</code> or nothing if there is no next chapter.</dd>
       <dt><code>&lt;split:prev&gt;&#8230;&lt;/split:prev&gt;</code></dt>
       <dd>Replaced by <code>&lt;a href="<em>PREV-CHAPTER</em>"&gt;&#8230;&lt;/a&gt;</code> or nothing if there is no previous chapter.</dd>
+      <dt><code>&lt;split:if test="<em>CONDITION</em>"&gt;&#8230;&lt;/split:if&gt;</code></dt>
+      <dd>The &#8230; if the condition is true, or empty string otherwise.</dd>
+      <dt><code>&lt;split:unless test="<em>CONDITION</em>"&gt;&#8230;&lt;/split:unless&gt;</code></dt>
+      <dd>The &#8230; if the condition is false, or empty string otherwise.</dd>
+    </dl>
+
+    <p>The <em>CONDITION</em> may be:</p>
+
+    <dl>
+      <dt><code>toc</code></dt>
+      <dd>We are generating ToC (not a chapter).</dd>
+      <dt><code>has-next</code></dt>
+      <dd>Our chapter is not last.</dd>
+      <dt><code>has-prev</code></dt>
+      <dd>Our chapter is not the ToC.</dd>
     </dl>
 
     <p>Note that ToC is counted as the first (or zeroth, if you prefer) chapter.</p>
