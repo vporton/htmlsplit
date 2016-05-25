@@ -18,7 +18,7 @@
     method = "xml"
     byte-order-mark = "no"
     encoding = "utf-8"
-    indent = "yes"
+    indent = "no"
     media-type = "text/html"
     omit-xml-declaration = "no"
     version = "1.1" />
