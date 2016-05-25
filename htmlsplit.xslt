@@ -117,9 +117,9 @@
     <xsl:copy-of select="$config-file/settings/chapter-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
-  <xsl:variable name="chapter-settings-files" select="(my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings))[1]"/>
-  <xsl:variable name="chapter-settings-macros" select="(my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings))[1]"/>
-  <xsl:variable name="chapter-settings-header" select="(my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings))[1]"/>
+  <xsl:variable name="chapter-settings-files" select="my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings)"/>
+  <xsl:variable name="chapter-settings-macros" select="my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings)"/>
+  <xsl:variable name="chapter-settings-header" select="my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings)"/>
 
   <!-- Load and pre-process the input file -->
 
@@ -243,7 +243,7 @@
     <xsl:param name="chapter-attrs" tunnel="yes"/>
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
       <xsl:copy-of select="$chapter-attrs"/>
-      <xsl:apply-templates mode="wrapper" select="$settings-header/node()"/>
+      <xsl:apply-templates mode="wrapper" select="$settings-header[1]/node()"/> <!-- FIXME: in other places use settings like this! -->
     </xsl:element>
   </xsl:template>
 
