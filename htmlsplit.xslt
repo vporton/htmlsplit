@@ -350,7 +350,7 @@
     <xsl:param name="filename"/>
     <xsl:result-document href="{$output-directory}/{$filename}">
       <xsl:variable name="chapter" select="node()"/>
-      <xsl:variable name="chapter-title" select=".//html:*[local-name() eq $chapter-tag]/text()"/> <!-- FIXME: text() is a hack for <title> tag -->
+      <xsl:variable name="chapter-title" select=".//html:*[local-name() eq $chapter-tag]//text()"/> <!-- FIXME: text() is a hack for <title> tag -->
       <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($chapter-settings-files, 'wrapper'))">
         <xsl:with-param name="filetype" select="'chapter'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="following-sibling::*[1]/@filename" tunnel="yes"/>
