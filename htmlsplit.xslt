@@ -1,5 +1,6 @@
 <xsl:stylesheet
   xmlns:xsl = "http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs = "http://www.w3.org/2001/XMLSchema"
   xmlns:fn = "http://www.w3.org/2005/xpath-functions"
   xmlns = "http://www.w3.org/1999/xhtml"
   xmlns:split = "http://portonvictor.org/ns/split"
@@ -36,6 +37,7 @@
   <xsl:variable name="toc-filename" select="($user-settings/*/toc-filename, $system-settings/*/toc-filename)[1]/text()"/>
   <xsl:variable name="chapter-filename" select="($user-settings/*/chapter-filename, $system-settings/*/chapter-filename)[1]/node()"/>
   <xsl:variable name="toc-list-tag" select="($user-settings/*/toc-list-tag, $system-settings/*/toc-list-tag)[1]/node()"/>
+  <xsl:variable name="skip-chapters" select="xs:integer(($user-settings/*/skip-chapters, $system-settings/*/skip-chapters)[1]/text())"/>
 
   <!-- By default if the document has more than one <h1> use 'h1', otherwise 'h2'. -->
   <xsl:variable name="chapter-tag-configured" select="($user-settings/chapter-tag, $system-settings/chapter-tag)[1]/text()"/>
@@ -126,14 +128,16 @@
          The current implementation does not support <h1>/<h2> tags inside a <div> or another tag. -->
     <xsl:for-each-group select=".//html:*[local-name() eq $chapter-tag][1]/(.|following-sibling::*)"
                         group-starting-with="html:*[local-name() eq $chapter-tag]">
-      <data:doc>
-        <xsl:attribute name="filename">
-          <xsl:apply-templates mode="chapter-filename" select="$chapter-filename">
-            <xsl:with-param name="number" select="position()" tunnel="yes"/>
-          </xsl:apply-templates>
-        </xsl:attribute>
-        <xsl:copy-of select="current-group()"/>
-      </data:doc>
+      <xsl:if test="position() gt $skip-chapters">
+        <data:doc>
+          <xsl:attribute name="filename">
+            <xsl:apply-templates mode="chapter-filename" select="$chapter-filename">
+              <xsl:with-param name="number" select="position()" tunnel="yes"/>
+            </xsl:apply-templates>
+          </xsl:attribute>
+          <xsl:copy-of select="current-group()"/>
+        </data:doc>
+      </xsl:if>
     </xsl:for-each-group>
   </xsl:template>
 

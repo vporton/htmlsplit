@@ -1,6 +1,7 @@
 <?xml version="1.1"?>
 <settings xmlns:split = "http://portonvictor.org/ns/split">
   <!-- Settings in <chapter-page> and <toc-page> take precedence over settings in <generic-page>. -->
+  <skip-chapters>0</skip-chapters>
   <chapter-tag/> <!-- not specified, use heuristics -->
   <toc-filename>toc.html</toc-filename>
   <chapter-filename>chapter<number/>.html</chapter-filename>
