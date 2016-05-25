@@ -1,5 +1,5 @@
 # htmlsplit
-HTML-split XSLT templates is a set of XSLT templates (a program written in XSLT programming language),
+HTML-split XSLT templates is an XSLT template (a program written in XSLT programming language),
 which splits an XHTML file into several "chapters" and also creates a table of content (ToC).
 
 It is fully configurable and themeable with config files and XML templates.
