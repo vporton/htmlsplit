@@ -311,7 +311,7 @@
   <xsl:template name="output-toc-inner">
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$toc-list-tag}">
       <xsl:for-each select="$preprocessed-input/*">
-        <li><a href="{@filename}"><xsl:copy-of select="html:*[local-name() eq $chapter-tag]/node()"/></a></li>
+        <li><a href="{@filename}"><xsl:copy-of select="html:*[local-name() eq $chapter-tag]/node()[fn:not(self::html:a)]"/></a></li>
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
