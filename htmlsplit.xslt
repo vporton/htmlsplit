@@ -242,7 +242,7 @@
     <xsl:param name="chapter-attrs" tunnel="yes"/>
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
       <xsl:copy-of copy-namespaces="no" select="$chapter-attrs"/>
-      <xsl:apply-templates mode="wrapper" select="$settings-header"/> <!-- FIXME: in other places use settings like this! -->
+      <xsl:apply-templates mode="wrapper" select="$settings-header"/>
     </xsl:element>
   </xsl:template>
 
