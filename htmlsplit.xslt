@@ -59,6 +59,7 @@
 
   <xsl:variable name="input-document" select="/"/>
   <xsl:variable name="doc-title" select="/html:html/html:head/html:title/text()"/>
+  <xsl:variable name="body-attrs" select="/html:html/html:body/@*"/>
   <xsl:variable name="head" select="/html:html/html:head/node()[fn:not(self::html:title)]"/>
 
   <!-- Parse settings.xml and user's settings -->
@@ -198,6 +199,14 @@
     <xsl:copy>
       <xsl:apply-templates mode="wrapper" select="@*"/>
       <xsl:copy-of select="$head"/>
+      <xsl:apply-templates mode="wrapper" select="node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="wrapper" match="html:body">
+    <xsl:copy>
+      <xsl:apply-templates mode="wrapper" select="@*"/>
+      <xsl:copy-of select="$body-attrs"/>
       <xsl:apply-templates mode="wrapper" select="node()"/>
     </xsl:copy>
   </xsl:template>
