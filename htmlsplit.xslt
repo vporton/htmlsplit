@@ -14,7 +14,7 @@
 
   <!-- TODO: doctype -->
   <xsl:output
-    method = "xhtml"
+    method = "xml"
     byte-order-mark = "no"
     encoding = "utf-8"
     indent = "yes"
