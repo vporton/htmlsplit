@@ -164,7 +164,6 @@
       <xsl:apply-templates mode="adjust-links" select="@*"/>
       <xsl:if test="fn:substring(@href,1,1) eq '#'"> <!-- FIXME: can href contain spaces? http://webmasters.stackexchange.com/questions/93540/are-spaces-in-href-valid -->
         <xsl:variable name="id" select="fn:substring(@href,2)"/>
-            <xsl:message select="$id"/>
         <xsl:variable name="link-target-chapter" select="$chapters/data:doc[.//*[@id eq $id]][1]"/>
         <xsl:attribute name="href" select="concat($link-target-chapter/@filename, @href)"/>
       </xsl:if>
@@ -326,9 +325,23 @@
   <xsl:template name="output-toc-inner">
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$toc-list-tag}">
       <xsl:for-each select="$preprocessed-input/*">
-        <li><a href="{@filename}"><xsl:copy-of select="html:*[local-name() eq $chapter-tag]/node()[fn:not(self::html:a)]"/></a></li>
+        <li>
+          <a href="{@filename}">
+            <xsl:apply-templates mode="hyperlink-content" select="html:*[local-name() eq $chapter-tag]/node()"/>
+          </a>
+        </li>
       </xsl:for-each>
     </xsl:element>
+  </xsl:template>
+
+  <xsl:template mode="hyperlink-content" match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates mode="hyperlink-content" select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="hyperlink-content" match="html:a"> <!-- No hyperlinks inside hyperlinks -->
+    <xsl:apply-templates mode="hyperlink-content" select="node()"/>
   </xsl:template>
 
   <!-- Output a chapter -->
