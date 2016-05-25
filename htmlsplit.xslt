@@ -75,7 +75,7 @@
       <xsl:variable name="value" select="$option-containers[1]/*[local-name() eq $option-name]"/>
       <xsl:choose>
         <xsl:when test="$value">
-          <xsl:copy-of select="$value"/>
+          <xsl:copy-of copy-namespaces="no" select="$value"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="my:extract-option(fn:subsequence($option-containers, 2), $option-name)"/>
@@ -86,17 +86,17 @@
 
   <xsl:function name="my:toc-settings-files1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/toc-page/files, $config-file/settings/generic-page/files"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/files, $config-file/settings/generic-page/files"/>
   </xsl:function>
 
   <xsl:function name="my:toc-settings-macros1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/toc-page/macros, $config-file/settings/generic-page/macros"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/macros, $config-file/settings/generic-page/macros"/>
   </xsl:function>
 
   <xsl:function name="my:toc-settings-header1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/toc-page/header, $config-file/settings/generic-page/header"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
   <xsl:variable name="toc-settings-files" select="my:toc-settings-files1($user-settings), my:toc-settings-files1($system-settings)"/>
@@ -106,17 +106,17 @@
 
   <xsl:function name="my:chapter-settings-files1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/chapter-page/files, $config-file/settings/generic-page/files"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/files, $config-file/settings/generic-page/files"/>
   </xsl:function>
 
   <xsl:function name="my:chapter-settings-macros1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/chapter-page/macros, $config-file/settings/generic-page/macros"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/macros, $config-file/settings/generic-page/macros"/>
   </xsl:function>
 
   <xsl:function name="my:chapter-settings-header1">
     <xsl:param name="config-file"/>
-    <xsl:copy-of select="$config-file/settings/chapter-page/header, $config-file/settings/generic-page/header"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
   <xsl:variable name="chapter-settings-files" select="my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings)"/>
@@ -138,7 +138,7 @@
               <xsl:with-param name="number" select="position()" tunnel="yes"/>
             </xsl:apply-templates>
           </xsl:attribute>
-          <xsl:copy-of select="current-group()"/>
+          <xsl:copy-of copy-namespaces="no" select="current-group()"/>
         </data:doc>
       </xsl:if>
     </xsl:for-each-group>
@@ -154,7 +154,7 @@
   </xsl:template>
 
   <xsl:template mode="adjust-links" match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="adjust-links" select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
@@ -162,7 +162,7 @@
   <!-- TODO: Should we preserve relative links which point to an anchor inside the same chapter? -->
   <xsl:template mode="adjust-links" match="html:a">
     <xsl:param name="chapters" tunnel="yes"/>
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="adjust-links" select="@*"/>
       <xsl:if test="fn:substring(@href,1,1) eq '#'"> <!-- FIXME: can href contain spaces? http://webmasters.stackexchange.com/questions/93540/are-spaces-in-href-valid -->
         <xsl:variable name="id" select="fn:substring(@href,2)"/>
@@ -193,23 +193,23 @@
   </xsl:template>
 
   <xsl:template mode="wrapper" match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="wrapper" select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="html:head">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="wrapper" select="@*"/>
-      <xsl:copy-of select="$head"/>
+      <xsl:copy-of copy-namespaces="no" select="$head"/>
       <xsl:apply-templates mode="wrapper" select="node()"/>
     </xsl:copy>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="html:body">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="wrapper" select="@*"/>
-      <xsl:copy-of select="$body-attrs"/>
+      <xsl:copy-of copy-namespaces="no" select="$body-attrs"/>
       <xsl:apply-templates mode="wrapper" select="node()"/>
     </xsl:copy>
   </xsl:template>
@@ -244,7 +244,7 @@
     <xsl:param name="settings-header" tunnel="yes"/>
     <xsl:param name="chapter-attrs" tunnel="yes"/>
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
-      <xsl:copy-of select="$chapter-attrs"/>
+      <xsl:copy-of copy-namespaces="no" select="$chapter-attrs"/>
       <xsl:apply-templates mode="wrapper" select="$settings-header"/> <!-- FIXME: in other places use settings like this! -->
     </xsl:element>
   </xsl:template>
@@ -305,17 +305,17 @@
 
   <xsl:template mode="condition" match="@test[. eq 'toc']">
     <xsl:param name="is-toc" tunnel="yes"/>
-    <xsl:copy-of select="$is-toc"/>
+    <xsl:copy-of copy-namespaces="no" select="$is-toc"/>
   </xsl:template>
 
   <xsl:template mode="condition" match="@test[. eq 'has-next']">
     <xsl:param name="next-uri" tunnel="yes"/>
-    <xsl:copy-of select="if($next-uri) then '1' else ''"/>
+    <xsl:copy-of copy-namespaces="no" select="if($next-uri) then '1' else ''"/>
   </xsl:template>
 
   <xsl:template mode="condition" match="@test[. eq 'has-prev']">
     <xsl:param name="prev-uri" tunnel="yes"/>
-    <xsl:copy-of select="if($prev-uri) then '1' else ''"/>
+    <xsl:copy-of copy-namespaces="no" select="if($prev-uri) then '1' else ''"/>
   </xsl:template>
 
   <!-- ToC output -->
@@ -346,7 +346,7 @@
   </xsl:template>
 
   <xsl:template mode="hyperlink-content" match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="hyperlink-content" select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
@@ -385,7 +385,7 @@
 
   <xsl:template mode="chapter" match="@*|node()">
     <xsl:if test="not(self::html:*[local-name() eq $chapter-tag])">
-      <xsl:copy>
+      <xsl:copy copy-namespaces="no">
         <xsl:apply-templates mode="chapter" select="@*|node()"/>
       </xsl:copy>
     </xsl:if>
