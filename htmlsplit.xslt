@@ -8,7 +8,7 @@
   xmlns:my = "http://portonvictor.org/ns/misc2"
   xmlns:data = "http://portonvictor.org/ns/misc"
   version = "2.0"
-  exclude-result-prefixes = "fn data my html split"
+  exclude-result-prefixes = "xs fn data my html split"
   xpath-default-namespace = "">
 
   <!-- Preliminary declarations -->
