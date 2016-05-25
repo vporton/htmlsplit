@@ -11,8 +11,6 @@
   exclude-result-prefixes = "xs fn data my html split"
   xpath-default-namespace = "">
 
-  <!-- TODO: http://stackoverflow.com/questions/4593326/xsl-how-to-remove-unused-namespaces-from-source-xml -->
-
   <!-- Preliminary declarations -->
 
   <!-- TODO: doctype -->
