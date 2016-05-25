@@ -1,6 +1,7 @@
 <?xml version="1.1"?>
 <html xmlns = "http://www.w3.org/1999/xhtml" xmlns:split = "http://portonvictor.org/ns/split">
   <head>
+    <meta charset="utf-8" />
     <title><split:plain><split:macro name="full-title"/></split:plain></title>
   </head>
   <body>
