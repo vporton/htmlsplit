@@ -31,8 +31,8 @@
 
   <!-- Load configuration -->
 
-  <xsl:variable name="system-settings" select="fn:doc('settings.xml')"/>
-  <xsl:variable name="user-settings" select="if($config-filename) then fn:doc($config-filename) else ()"/>
+  <xsl:variable name="system-settings" select="document('settings.xml')"/>
+  <xsl:variable name="user-settings" select="if($config-filename) then document($config-filename, $input-document) else ()"/>
 
   <xsl:variable name="toc-filename" select="($user-settings/*/toc-filename, $system-settings/*/toc-filename)[1]/text()"/>
   <xsl:variable name="chapter-filename" select="($user-settings/*/chapter-filename, $system-settings/*/chapter-filename)[1]/node()"/>
@@ -231,7 +231,7 @@
 
   <xsl:template mode="wrapper" match="split:insert-file">
     <xsl:param name="settings-files" tunnel="yes"/>
-    <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($settings-files, @alias)/node())"/>
+    <xsl:apply-templates mode="wrapper" select="document(my:extract-option($settings-files, @alias)/node(), $input-document)"/>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="split:doc-title">
@@ -320,7 +320,7 @@
 
   <xsl:template name="output-toc">
     <xsl:result-document href="{$output-directory}/{$toc-filename}">
-      <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($toc-settings-files, 'wrapper'))">
+      <xsl:apply-templates mode="wrapper" select="document(my:extract-option($toc-settings-files, 'wrapper'), $input-document)">
         <xsl:with-param name="filetype" select="'toc'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="$preprocessed-input/*[1]/@filename" tunnel="yes"/>
         <xsl:with-param name="is-toc" select="1" tunnel="yes"/>
@@ -361,7 +361,7 @@
       <xsl:variable name="chapter" select="node()"/>
       <xsl:variable name="chapter-title" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
       <xsl:variable name="chapter-attrs" select=".//html:*[local-name() eq $chapter-tag]/@*"/>
-      <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($chapter-settings-files, 'wrapper'))">
+      <xsl:apply-templates mode="wrapper" select="document(my:extract-option($chapter-settings-files, 'wrapper'), $input-document)">
         <xsl:with-param name="filetype" select="'chapter'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="following-sibling::*[1]/@filename" tunnel="yes"/>
         <xsl:with-param name="prev-uri" select="(preceding-sibling::*[1]/@filename, $toc-filename)[1]" tunnel="yes"/>
