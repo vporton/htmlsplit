@@ -240,7 +240,9 @@
 
   <xsl:template mode="wrapper" match="split:make-chapter-header">
     <xsl:param name="settings-header" tunnel="yes"/>
+    <xsl:param name="chapter-attrs" tunnel="yes"/>
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
+      <xsl:copy-of select="$chapter-attrs"/>
       <xsl:apply-templates mode="wrapper" select="$settings-header/node()"/>
     </xsl:element>
   </xsl:template>
@@ -351,6 +353,7 @@
     <xsl:result-document href="{$output-directory}/{$filename}">
       <xsl:variable name="chapter" select="node()"/>
       <xsl:variable name="chapter-title" select=".//html:*[local-name() eq $chapter-tag]//text()"/> <!-- FIXME: text() is a hack for <title> tag -->
+      <xsl:variable name="chapter-attrs" select=".//html:*[local-name() eq $chapter-tag]/@*"/>
       <xsl:apply-templates mode="wrapper" select="fn:doc(my:extract-option($chapter-settings-files, 'wrapper'))">
         <xsl:with-param name="filetype" select="'chapter'" tunnel="yes"/>
         <xsl:with-param name="next-uri" select="following-sibling::*[1]/@filename" tunnel="yes"/>
@@ -360,6 +363,7 @@
         <xsl:with-param name="settings-macros" select="$chapter-settings-macros" tunnel="yes"/>
         <xsl:with-param name="settings-header" select="$chapter-settings-header" tunnel="yes"/>
         <xsl:with-param name="chapter" select="$chapter" tunnel="yes"/>
+        <xsl:with-param name="chapter-attrs" select="$chapter-attrs" tunnel="yes"/>
         <xsl:with-param name="chapter-title" select="$chapter-title" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
