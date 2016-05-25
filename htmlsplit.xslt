@@ -99,7 +99,7 @@
 
   <xsl:variable name="toc-settings-files" select="my:toc-settings-files1($user-settings), my:toc-settings-files1($system-settings)"/>
   <xsl:variable name="toc-settings-macros" select="my:toc-settings-macros1($user-settings), my:toc-settings-macros1($system-settings)"/>
-  <xsl:variable name="toc-settings-header" select="my:toc-settings-header1($user-settings), my:toc-settings-header1($system-settings)"/>
+  <xsl:variable name="toc-settings-header" select="(my:toc-settings-header1($user-settings), my:toc-settings-header1($system-settings))[1]/node()"/>
 
 
   <xsl:function name="my:chapter-settings-files1">
@@ -119,7 +119,7 @@
 
   <xsl:variable name="chapter-settings-files" select="my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings)"/>
   <xsl:variable name="chapter-settings-macros" select="my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings)"/>
-  <xsl:variable name="chapter-settings-header" select="my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings)"/>
+  <xsl:variable name="chapter-settings-header" select="(my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings))[1]/node()"/>
 
   <!-- Load and pre-process the input file -->
 
@@ -326,7 +326,7 @@
         <xsl:with-param name="is-toc" select="1" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$toc-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$toc-settings-macros" tunnel="yes"/>
-        <xsl:with-param name="settings-header" select="$toc-settings-header[1]/node()" tunnel="yes"/>
+        <xsl:with-param name="settings-header" select="$toc-settings-header" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
@@ -368,7 +368,7 @@
         <xsl:with-param name="is-toc" select="''" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$chapter-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$chapter-settings-macros" tunnel="yes"/>
-        <xsl:with-param name="settings-header" select="$chapter-settings-header[1]/node()" tunnel="yes"/>
+        <xsl:with-param name="settings-header" select="$chapter-settings-header" tunnel="yes"/>
         <xsl:with-param name="chapter" select="$chapter" tunnel="yes"/>
         <xsl:with-param name="chapter-attrs" select="$chapter-attrs" tunnel="yes"/>
         <xsl:with-param name="chapter-title" select="$chapter-title" tunnel="yes"/>
