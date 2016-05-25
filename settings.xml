@@ -8,7 +8,7 @@
   <toc-list-tag>ol</toc-list-tag>
   <generic-page>
     <files>
-      <wrapper>tmpl/wrapper.xml</wrapper> <!-- main file -->
+      <wrapper>wrapper.xml</wrapper> <!-- main file -->
     </files>
   </generic-page>
   <chapter-page>

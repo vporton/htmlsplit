@@ -117,9 +117,9 @@
     <xsl:copy-of select="$config-file/settings/chapter-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
-  <xsl:variable name="chapter-settings-files" select="my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings)"/>
-  <xsl:variable name="chapter-settings-macros" select="my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings)"/>
-  <xsl:variable name="chapter-settings-header" select="my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings)"/>
+  <xsl:variable name="chapter-settings-files" select="(my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings))[1]"/>
+  <xsl:variable name="chapter-settings-macros" select="(my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings))[1]"/>
+  <xsl:variable name="chapter-settings-header" select="(my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings))[1]"/>
 
   <!-- Load and pre-process the input file -->
 
