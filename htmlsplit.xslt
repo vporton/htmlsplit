@@ -243,7 +243,7 @@
     <xsl:param name="chapter-attrs" tunnel="yes"/>
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
       <xsl:copy-of select="$chapter-attrs"/>
-      <xsl:apply-templates mode="wrapper" select="$settings-header[1]/node()"/> <!-- FIXME: in other places use settings like this! -->
+      <xsl:apply-templates mode="wrapper" select="$settings-header"/> <!-- FIXME: in other places use settings like this! -->
     </xsl:element>
   </xsl:template>
 
@@ -326,7 +326,7 @@
         <xsl:with-param name="is-toc" select="1" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$toc-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$toc-settings-macros" tunnel="yes"/>
-        <xsl:with-param name="settings-header" select="$toc-settings-header" tunnel="yes"/>
+        <xsl:with-param name="settings-header" select="$toc-settings-header[1]/node()" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
@@ -368,7 +368,7 @@
         <xsl:with-param name="is-toc" select="''" tunnel="yes"/>
         <xsl:with-param name="settings-files" select="$chapter-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$chapter-settings-macros" tunnel="yes"/>
-        <xsl:with-param name="settings-header" select="$chapter-settings-header" tunnel="yes"/>
+        <xsl:with-param name="settings-header" select="$chapter-settings-header[1]/node()" tunnel="yes"/>
         <xsl:with-param name="chapter" select="$chapter" tunnel="yes"/>
         <xsl:with-param name="chapter-attrs" select="$chapter-attrs" tunnel="yes"/>
         <xsl:with-param name="chapter-title" select="$chapter-title" tunnel="yes"/>
