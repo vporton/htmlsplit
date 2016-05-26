@@ -22,7 +22,7 @@
   <toc-page>
     <header><split:doc-title/>: Table of content</header> <!-- for using in <h1> or <h2> -->
     <macros>
-      <full-title>Toc of <split:doc-title/></full-title> <!-- for using in <title> -->
+      <full-title>ToC of <split:doc-title/></full-title> <!-- for using in <title> -->
     </macros>
     <files>
     </files>
