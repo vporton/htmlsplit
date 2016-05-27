@@ -161,8 +161,9 @@
     <xsl:param name="chapters" tunnel="yes"/>
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="adjust-links" select="@*"/>
-      <xsl:if test="fn:substring(@href,1,1) eq '#'"> <!-- FIXME: can href contain spaces? http://webmasters.stackexchange.com/questions/93540/are-spaces-in-href-valid -->
-        <xsl:variable name="id" select="fn:substring(@href,2)"/>
+      <xsl:variable name="uri" select="replace(@href, '^\s+|\s+$', '')"/> <!-- https://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces -->
+      <xsl:if test="fn:substring($uri,1,1) eq '#'">
+        <xsl:variable name="id" select="fn:substring($uri,2)"/>
         <xsl:variable name="link-target-chapter" select="$chapters/data:doc[.//*[@id eq $id]][1]"/>
         <xsl:attribute name="href" select="concat($link-target-chapter/@filename, @href)"/>
       </xsl:if>
