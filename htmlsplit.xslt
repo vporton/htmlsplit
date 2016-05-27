@@ -165,7 +165,7 @@
       <xsl:if test="fn:substring($uri,1,1) eq '#'">
         <xsl:variable name="id" select="fn:substring($uri,2)"/>
         <xsl:variable name="link-target-chapter" select="$chapters/data:doc[.//*[@id eq $id]][1]"/>
-        <xsl:attribute name="href" select="concat($link-target-chapter/@filename, @href)"/>
+        <xsl:attribute name="href" select="concat($link-target-chapter/@filename, $uri)"/>
       </xsl:if>
       <xsl:apply-templates mode="adjust-links" select="node()"/>
     </xsl:copy>
