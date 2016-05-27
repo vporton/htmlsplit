@@ -47,7 +47,7 @@
       <xsl:when test="$chapter-tag-configured">
         <xsl:value-of select="$chapter-tag-configured"/>
       </xsl:when>
-      <xsl:when test="$input-document//html:h1[2]">
+      <xsl:when test="($input-document//html:h1)[2]">
         <xsl:value-of select="'h1'"/>
       </xsl:when>
       <xsl:otherwise>
@@ -127,6 +127,7 @@
   <!-- The very first stage of processing: split the document into fragments, which will be named chapterN.html. -->
   <xsl:template name="split">
     <xsl:variable name="container" select="my:lca(.//html:*[local-name() eq $chapter-tag])"/>
+    <xsl:message select="$chapter-tag"/> <!-- FIXME -->
     <xsl:variable name="start" select="$container/node()[(self::html:*|.//html:*)[local-name() eq $chapter-tag]][1]"/>
     <xsl:for-each-group select="$start|$start/following-sibling::node()"
                         group-starting-with="*[(self::html:*|.//html:*)[local-name() eq $chapter-tag]]">
@@ -329,7 +330,7 @@
       <xsl:for-each select="$preprocessed-input/*">
         <li>
           <a href="{@filename}">
-            <xsl:apply-templates mode="hyperlink-content" select="html:*[local-name() eq $chapter-tag]/node()"/>
+            <xsl:apply-templates mode="hyperlink-content" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
           </a>
         </li>
       </xsl:for-each>
