@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Test</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>First chapter</h1>
+      </div>
+      <p>First chapter text.</p>
+      <p>Blah, blah, blah...</p>
+      <div class="header">
+        <h1>Second chapter</h1>
+      </div>
+      <p>Second chapter text.</p>
+      <p>Blah, blah, blah...</p>
+    </div>
+  </body>
+</html>

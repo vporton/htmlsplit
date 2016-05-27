@@ -20,7 +20,6 @@
     </files>
   </chapter-page>
   <toc-page>
-    <header><split:doc-title/>: Table of content</header> <!-- for using in <h1> or <h2> -->
     <macros>
       <full-title>ToC of <split:doc-title/></full-title> <!-- for using in <title> -->
     </macros>
