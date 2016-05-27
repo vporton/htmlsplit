@@ -5,11 +5,13 @@
   xmlns = "http://www.w3.org/1999/xhtml"
   xmlns:split = "http://portonvictor.org/ns/split"
   xmlns:html = "http://www.w3.org/1999/xhtml"
-  xmlns:my = "http://portonvictor.org/ns/misc2"
+  xmlns:my = "my:my"
   xmlns:data = "http://portonvictor.org/ns/misc"
   version = "2.0"
   exclude-result-prefixes = "xs fn data my html split"
   xpath-default-namespace = "">
+
+  <xsl:import href="lowest-common.xslt"/>
 
   <!-- Preliminary declarations -->
 
@@ -124,10 +126,11 @@
 
   <!-- The very first stage of processing: split the document into fragments, which will be named chapterN.html. -->
   <xsl:template name="split">
-    <!-- FIXME: It produces duplicated tags if I replace following-sibling::* with following::*.
-         The current implementation does not support <h1>/<h2> tags inside a <div> or another tag. -->
-    <xsl:for-each-group select=".//html:*[local-name() eq $chapter-tag][1]/(.|following-sibling::*)"
-                        group-starting-with="html:*[local-name() eq $chapter-tag]">
+    <xsl:variable name="container" select="my:lca(.//html:*[local-name() eq $chapter-tag])"/>
+    <xsl:variable name="start" select="$container/node()[(self::html:*|.//html:*)[local-name() eq $chapter-tag]][1]"/>
+    <xsl:message select="$start"/>
+    <xsl:for-each-group select="$start|$start/following-sibling::node()"
+                        group-starting-with="*[(self::html:*|.//html:*)[local-name() eq $chapter-tag]]">
       <xsl:if test="position() gt $skip-chapters">
         <data:doc>
           <xsl:attribute name="filename">
@@ -238,6 +241,7 @@
     <xsl:value-of select="$doc-title"/>
   </xsl:template>
 
+  <!-- FIXME: Remove? -->
   <xsl:template mode="wrapper" match="split:make-chapter-header">
     <xsl:param name="settings-header" tunnel="yes"/>
     <xsl:param name="chapter-attrs" tunnel="yes"/>
@@ -381,12 +385,11 @@
     <xsl:apply-templates mode="chapter" select="$chapter"/>
   </xsl:template>
 
+  <!-- FIXME -->
   <xsl:template mode="chapter" match="@*|node()">
-    <xsl:if test="not(self::html:*[local-name() eq $chapter-tag])">
-      <xsl:copy copy-namespaces="no">
-        <xsl:apply-templates mode="chapter" select="@*|node()"/>
-      </xsl:copy>
-    </xsl:if>
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates mode="chapter" select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
 
   <!-- The main entry point of our program -->

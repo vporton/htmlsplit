@@ -13,7 +13,7 @@
       <split:if test="has-next"><split:next>Next &gt;&gt;</split:next></split:if>
       <split:unless test="has-next">Next &gt;&gt;</split:unless>
     </p>
-    <split:make-chapter-header/> <!-- either <h1> or <h2> -->
+    <!--split:make-chapter-header/--> <!-- either <h1> or <h2> -->
     <split:content/>
     <p>
       <split:if test="has-prev"><split:prev>&lt;&lt; Prev</split:prev></split:if>
