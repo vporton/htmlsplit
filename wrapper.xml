@@ -13,6 +13,7 @@
       <split:if test="has-next"><split:next>Next &gt;&gt;</split:next></split:if>
       <split:unless test="has-next">Next &gt;&gt;</split:unless>
     </p>
+    <split:if test="toc"><h2>Table of content</h2></split:if>
     <!--split:make-chapter-header/--> <!-- either <h1> or <h2> -->
     <split:content/>
     <p>

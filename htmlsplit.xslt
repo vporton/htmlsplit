@@ -128,7 +128,6 @@
   <xsl:template name="split">
     <xsl:variable name="container" select="my:lca(.//html:*[local-name() eq $chapter-tag])"/>
     <xsl:variable name="start" select="$container/node()[(self::html:*|.//html:*)[local-name() eq $chapter-tag]][1]"/>
-    <xsl:message select="$start"/>
     <xsl:for-each-group select="$start|$start/following-sibling::node()"
                         group-starting-with="*[(self::html:*|.//html:*)[local-name() eq $chapter-tag]]">
       <xsl:if test="position() gt $skip-chapters">
@@ -239,16 +238,6 @@
 
   <xsl:template mode="wrapper" match="split:doc-title">
     <xsl:value-of select="$doc-title"/>
-  </xsl:template>
-
-  <!-- FIXME: Remove? -->
-  <xsl:template mode="wrapper" match="split:make-chapter-header">
-    <xsl:param name="settings-header" tunnel="yes"/>
-    <xsl:param name="chapter-attrs" tunnel="yes"/>
-    <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$chapter-tag}">
-      <xsl:copy-of copy-namespaces="no" select="$chapter-attrs"/>
-      <xsl:apply-templates mode="wrapper" select="$settings-header"/>
-    </xsl:element>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="split:chapter-title">
@@ -385,10 +374,18 @@
     <xsl:apply-templates mode="chapter" select="$chapter"/>
   </xsl:template>
 
-  <!-- FIXME -->
   <xsl:template mode="chapter" match="@*|node()">
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="chapter" select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="chapter" match="html:*[local-name() eq $chapter-tag]">
+    <xsl:param name="settings-header" tunnel="yes"/>
+    <xsl:param name="chapter-attrs" tunnel="yes"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:copy-of copy-namespaces="no" select="$chapter-attrs"/>
+      <xsl:apply-templates mode="wrapper" select="$settings-header"/>
     </xsl:copy>
   </xsl:template>
 
