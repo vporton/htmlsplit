@@ -127,9 +127,9 @@
   <!-- The very first stage of processing: split the document into fragments, which will be named chapterN.html. -->
   <xsl:template name="split">
     <xsl:variable name="container" select="my:lca(.//html:*[local-name() eq $chapter-tag])"/>
-    <xsl:variable name="start" select="$container/node()[(self::html:*|.//html:*)[local-name() eq $chapter-tag]][1]"/>
+    <xsl:variable name="start" select="$container/node()[descendant-or-self::html:*[local-name() eq $chapter-tag]][1]"/>
     <xsl:for-each-group select="$start|$start/following-sibling::node()"
-                        group-starting-with="*[(self::html:*|.//html:*)[local-name() eq $chapter-tag]]">
+                        group-starting-with="*[descendant-or-self::html:*[local-name() eq $chapter-tag]]">
       <xsl:if test="position() gt $skip-chapters">
         <data:doc>
           <xsl:attribute name="filename">
