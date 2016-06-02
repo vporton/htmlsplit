@@ -5,8 +5,8 @@
     <title><split:plain><split:macro name="full-title"/></split:plain></title>
   </head>
   <body>
-    <div style="float:right; border: 1px solid gray">
-      <split:toc/>
+    <div style="float:right; border: 1px solid gray; padding:5px">
+      <ol><split:toc/></ol>
     </div>
     <p>
       <split:if test="has-prev"><split:prev>&lt;&lt; Prev</split:prev></split:if>

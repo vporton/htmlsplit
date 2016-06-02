@@ -36,8 +36,8 @@
   <xsl:variable name="user-settings" select="if($config-filename) then document($config-filename, $input-document) else ()"/>
 
   <xsl:variable name="toc-filename" select="($user-settings/*/toc-filename, $system-settings/*/toc-filename)[1]/text()"/>
+  <xsl:variable name="toc-content" select="($user-settings/*/toc-content, $system-settings/*/toc-content)[1]/node()"/>
   <xsl:variable name="chapter-filename" select="($user-settings/*/chapter-filename, $system-settings/*/chapter-filename)[1]/node()"/>
-  <xsl:variable name="toc-list-tag" select="($user-settings/*/toc-list-tag, $system-settings/*/toc-list-tag)[1]/node()"/>
   <xsl:variable name="skip-chapters" select="xs:integer(($user-settings/*/skip-chapters, $system-settings/*/skip-chapters)[1]/text())"/>
 
   <!-- By default if the document has more than one <h1> use 'h1', otherwise 'h2'. -->
@@ -218,7 +218,7 @@
     <xsl:param name="filetype" tunnel="yes"/>
     <xsl:choose>
       <xsl:when test="$filetype eq 'toc'">
-        <xsl:call-template name="output-toc-inner"/>
+        <xsl:apply-templates mode="wrapper" select="$toc-content"/>
       </xsl:when>
       <xsl:when test="$filetype eq 'chapter'">
         <xsl:call-template name="output-chapter-inner"/>
@@ -329,14 +329,12 @@
   </xsl:template>
 
   <xsl:template name="output-toc-inner">
-    <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$toc-list-tag}">
-      <xsl:for-each select="$preprocessed-input/*">
-        <xsl:call-template name="toc-item">
-          <xsl:with-param name="link" select="@filename"/>
-          <xsl:with-param name="text" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
-        </xsl:call-template>
-      </xsl:for-each>
-    </xsl:element>
+    <xsl:for-each select="$preprocessed-input/*">
+      <xsl:call-template name="toc-item">
+        <xsl:with-param name="link" select="@filename"/>
+        <xsl:with-param name="text" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
+      </xsl:call-template>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="toc-item">

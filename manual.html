@@ -52,10 +52,10 @@
       <dt><code>toc-page</code>, and <code>chapter-page</code>, <code>generic-page</code></dt>
       <dd>Configuration for outputted ToC-files, chapter files, and generic fallback applied to both ToC and chapter files,
         if some settings is not explicitly set for ToC-files or chapter files.</dd>
-      <dt><code>toc-list-tag</code></dt>
-      <dd><code>ol</code> or <code>ul</code>, the HTML tag used to list chapters in ToC</dd>
       <dt><code>&lt;skip-chapters&gt;<em>NUMBER</em>&lt;/skip-chapters&gt;</code></dt>
       <dd>Skip the specified number of chapters (may be used to skip ToC in the beginning of a document</dd>
+      <dt><code>&lt;toc-content&gt;</code></dt>
+      <dd>What to put at <code>&lt;split:content/&gt;</code> in ToC file.</dd>
     </dl>
 
     <p>The following a page configuration parameters (inside <code>toc-page</code>, and <code>chapter-page</code>, or <code>generic-page</code>):</p>
@@ -98,7 +98,7 @@
       <dt><code>&lt;split:plain&gt;&#8230;&lt;/split:plain&gt;</code></dt>
       <dd>Format &#8230; as plain text (without XML tags)</dd>
       <dt><code>&lt;split:toc/&gt;</code></dt>
-      <dd>Insert a ToC (for use inside a chapter).</dd>
+      <dd>Insert a ToC (for use inside a chapter). Normally should be inside &lt;ul&gt; or &lt;ol&gt; tag.</dd>
     </dl>
 
     <p>The <em>CONDITION</em> may be:</p>
