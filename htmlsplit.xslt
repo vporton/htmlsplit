@@ -331,13 +331,22 @@
   <xsl:template name="output-toc-inner">
     <xsl:element namespace="http://www.w3.org/1999/xhtml" name="{$toc-list-tag}">
       <xsl:for-each select="$preprocessed-input/*">
-        <li>
-          <a href="{@filename}">
-            <xsl:apply-templates mode="hyperlink-content" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
-          </a>
-        </li>
+        <xsl:call-template name="toc-item">
+          <xsl:with-param name="link" select="@filename"/>
+          <xsl:with-param name="text" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
+        </xsl:call-template>
       </xsl:for-each>
     </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="toc-item">
+    <xsl:param name="link"/>
+    <xsl:param name="text"/>
+    <li>
+      <a href="{$link}">
+        <xsl:apply-templates mode="hyperlink-content" select="$text"/>
+      </a>
+    </li>
   </xsl:template>
 
   <xsl:template mode="hyperlink-content" match="@*|node()">
