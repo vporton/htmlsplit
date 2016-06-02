@@ -7,7 +7,7 @@
   <chapter-filename>chapter<number/>.html</chapter-filename>
   <toc-content>
     <ol xmlns="http://www.w3.org/1999/xhtml"><split:toc/></ol>
-   </toc-content>
+  </toc-content>
   <generic-page>
     <files>
       <wrapper>wrapper.xml</wrapper> <!-- main file -->
