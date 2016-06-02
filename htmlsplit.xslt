@@ -226,6 +226,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template mode="wrapper" match="split:toc">
+     <xsl:call-template name="output-toc-inner"/>
+  </xsl:template>
+
   <xsl:template mode="wrapper" match="split:macro">
     <xsl:param name="settings-macros" tunnel="yes"/>
     <xsl:apply-templates mode="wrapper" select="my:extract-option($settings-macros, @name)/node()"/>
@@ -270,7 +274,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template mode="wrapper" match="split:toc">
+  <xsl:template mode="wrapper" match="split:toc-ref">
     <a href="{$toc-filename}">
       <xsl:apply-templates select="@*|node()"/>
     </a>
