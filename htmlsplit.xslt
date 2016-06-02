@@ -187,7 +187,7 @@
     <xsl:for-each select="$preprocessed-input/data:doc">
       <xsl:variable name="filename" select="fn:string(@filename)"/>
       <xsl:call-template name="output-chapter">
-        <xsl:with-param name="filename" select="$filename"/>
+        <xsl:with-param name="filename" select="$filename" tunnel="yes"/>
       </xsl:call-template>
     </xsl:for-each>
   </xsl:template>
@@ -329,10 +329,12 @@
   </xsl:template>
 
   <xsl:template name="output-toc-inner">
+    <xsl:param name="filename" tunnel="yes"/>
     <xsl:for-each select="$preprocessed-input/*">
       <xsl:call-template name="toc-item">
         <xsl:with-param name="link" select="@filename"/>
         <xsl:with-param name="text" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
+        <xsl:with-param name="is-current" select="$filename eq @filename"/>
       </xsl:call-template>
     </xsl:for-each>
   </xsl:template>
@@ -340,6 +342,7 @@
   <xsl:template name="toc-item">
     <xsl:param name="link"/>
     <xsl:param name="text"/>
+    <xsl:param name="is-current"/>
     <li>
       <a href="{$link}">
         <xsl:apply-templates mode="hyperlink-content" select="$text"/>
@@ -360,7 +363,7 @@
   <!-- Output a chapter -->
 
   <xsl:template name="output-chapter">
-    <xsl:param name="filename"/>
+    <xsl:param name="filename" tunnel="yes"/>
     <xsl:result-document href="{$output-directory}/{$filename}">
       <xsl:variable name="chapter" select="node()"/>
       <xsl:variable name="chapter-title" select=".//html:*[local-name() eq $chapter-tag]/node()"/>
