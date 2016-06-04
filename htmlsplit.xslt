@@ -383,6 +383,7 @@
     </xsl:for-each>
   </xsl:template>
 
+  <!-- Overrides may use $filetype tunnel parameters to output different for the main ToC and a ToC embedded in a chapter. -->
   <xsl:template name="toc-item">
     <xsl:param name="link"/>
     <xsl:param name="text"/>
