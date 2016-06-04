@@ -39,6 +39,7 @@
   <xsl:variable name="toc-content" select="($user-settings/*/toc-content, $system-settings/*/toc-content)[1]/node()"/>
   <xsl:variable name="chapter-filename" select="($user-settings/*/chapter-filename, $system-settings/*/chapter-filename)[1]/node()"/>
   <xsl:variable name="skip-chapters" select="xs:integer(($user-settings/*/skip-chapters, $system-settings/*/skip-chapters)[1]/text())"/>
+  <xsl:variable name="skip-chapter-header" select="($user-settings/*/skip-chapter-header, $system-settings/*/skip-chapter-header)[1]/text()"/>
 
   <!-- By default if the document has more than one <h1> use 'h1', otherwise 'h2'. -->
   <xsl:variable name="chapter-tag-configured" select="($user-settings/chapter-tag, $system-settings/chapter-tag)[1]/text()"/>
@@ -430,7 +431,24 @@
 
   <xsl:template name="output-chapter-inner">
     <xsl:param name="chapter" tunnel="yes"/>
-    <xsl:apply-templates mode="chapter" select="$chapter"/>
+    <xsl:if test="$skip-chapter-header ne 'yes'">
+      <xsl:call-template name="output-chapter-header">
+        <xsl:with-param name="text" select="$chapter[1]"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:call-template name="output-chapter-text">
+      <xsl:with-param name="text" select="$chapter[position() gt 1]"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="output-chapter-header">
+    <xsl:param name="text"/>
+    <xsl:apply-templates mode="chapter" select="$text"/>
+  </xsl:template>
+
+  <xsl:template name="output-chapter-text">
+    <xsl:param name="text"/>
+    <xsl:apply-templates mode="chapter" select="$text"/>
   </xsl:template>
 
   <xsl:template mode="chapter" match="@*|node()">

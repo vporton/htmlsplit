@@ -5,6 +5,7 @@
   <chapter-tag/> <!-- not specified, use heuristics -->
   <toc-filename>toc.html</toc-filename>
   <chapter-filename>chapter<number/>.html</chapter-filename>
+  <skip-chapter-header>no</skip-chapter-header>
   <toc-content>
     <ol xmlns="http://www.w3.org/1999/xhtml"><split:toc/></ol>
   </toc-content>
