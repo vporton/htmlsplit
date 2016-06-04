@@ -15,14 +15,14 @@
 
   <!-- Preliminary declarations -->
 
-  <xsl:output
+  <!--xsl:output
     method = "xhtml"
     byte-order-mark = "no"
     encoding = "utf-8"
     indent = "no"
     media-type = "text/html"
     omit-xml-declaration = "yes"
-    version = "1.1" />
+    version = "1.1" /-->
 
   <!-- Parameters -->
 
@@ -250,8 +250,8 @@
 
   <xsl:template mode="wrapper" match="html:body">
     <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates mode="wrapper" select="@*"/>
       <xsl:copy-of copy-namespaces="no" select="$body-attrs"/>
+      <xsl:apply-templates mode="wrapper" select="@*"/>
       <xsl:apply-templates mode="wrapper" select="node()"/>
     </xsl:copy>
   </xsl:template>
