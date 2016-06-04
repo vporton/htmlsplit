@@ -21,7 +21,7 @@
     encoding = "utf-8"
     indent = "no"
     media-type = "text/html"
-    omit-xml-declaration = "no"
+    omit-xml-declaration = "yes"
     version = "1.1" />
 
   <!-- Parameters -->
