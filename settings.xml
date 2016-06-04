@@ -12,6 +12,8 @@
     <files>
       <wrapper>wrapper.xml</wrapper> <!-- main file -->
     </files>
+    <strip-style>no</strip-style>
+    <ignore-head>no</ignore-head>
   </generic-page>
   <chapter-page>
     <header><split:doc-title/>: <split:chapter-title/></header> <!-- for using in <h1> or <h2> -->

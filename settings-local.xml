@@ -5,5 +5,10 @@
     <files>
       <footer>footer.xml</footer>
     </files>
+    <ignore-head>yes</ignore-head>
   </generic-page>
+  <toc-page>
+    <strip-style>no</strip-style>
+    <ignore-head>no</ignore-head>
+  </toc-page>
 </settings>
