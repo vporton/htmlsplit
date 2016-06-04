@@ -427,7 +427,22 @@
 
   <xsl:template name="output-chapter-inner">
     <xsl:param name="chapter" tunnel="yes"/>
-    <xsl:apply-templates mode="chapter" select="$chapter"/>
+    <xsl:call-template name="output-chapter-header">
+      <xsl:with-param name="text" select="$chapter[1]"/>
+    </xsl:call-template>
+    <xsl:call-template name="output-chapter-text">
+      <xsl:with-param name="text" select="$chapter[position() gt 1]"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="output-chapter-header">
+    <xsl:param name="text"/>
+    <xsl:apply-templates mode="chapter" select="$text"/>
+  </xsl:template>
+
+  <xsl:template name="output-chapter-text">
+    <xsl:param name="text"/>
+    <xsl:apply-templates mode="chapter" select="$text"/>
   </xsl:template>
 
   <xsl:template mode="chapter" match="@*|node()">
