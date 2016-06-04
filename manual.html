@@ -68,6 +68,10 @@
       <dt><code>files</code></dt>
       <dd>A list of include files which can be used in templates. The file <code>wrapper</code> is special and is used as the main templates
         for chapters and ToCs.</dd>
+      <dt><code>ignore-head</code> (<code>yes</code> or <code>no</code>; default: <code>no</code>)</dt>
+      <dd>Ignore the <code>&lt;head&gt;</code> tag in the source XHTML document altogether.</dd>
+      <dt><code>strip-style</code> (<code>yes</code> or <code>no</code>; default: <code>no</code>)</dt>
+      <dd>Remove <code>&lt;style&gt;</code> tags from the head of the source XHTML document (makes sense only when <code>ignore-head</code> is <code>no</code>).</dd>
     </dl>
 
     <h2>Template <code>wrapper</code></h2>

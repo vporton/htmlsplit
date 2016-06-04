@@ -98,10 +98,21 @@
     <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
+  <xsl:function name="my:toc-settings-strip-style1">
+    <xsl:param name="config-file"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/strip-style, $config-file/settings/generic-page/strip-style"/>
+  </xsl:function>
+
+  <xsl:function name="my:toc-settings-ignore-head1">
+    <xsl:param name="config-file"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/toc-page/ignore-head, $config-file/settings/generic-page/ignore-head"/>
+  </xsl:function>
+
   <xsl:variable name="toc-settings-files" select="my:toc-settings-files1($user-settings), my:toc-settings-files1($system-settings)"/>
   <xsl:variable name="toc-settings-macros" select="my:toc-settings-macros1($user-settings), my:toc-settings-macros1($system-settings)"/>
   <xsl:variable name="toc-settings-header" select="(my:toc-settings-header1($user-settings), my:toc-settings-header1($system-settings))[1]/node()"/>
-
+  <xsl:variable name="toc-settings-strip-style" select="(my:toc-settings-strip-style1($user-settings), my:toc-settings-strip-style1($system-settings))[1]/text()"/>
+  <xsl:variable name="toc-settings-ignore-head" select="(my:toc-settings-ignore-head1($user-settings), my:toc-settings-ignore-head1($system-settings))[1]/text()"/>
 
   <xsl:function name="my:chapter-settings-files1">
     <xsl:param name="config-file"/>
@@ -118,9 +129,21 @@
     <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/header, $config-file/settings/generic-page/header"/>
   </xsl:function>
 
+  <xsl:function name="my:chapter-settings-strip-style1">
+    <xsl:param name="config-file"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/strip-style, $config-file/settings/generic-page/strip-style"/>
+  </xsl:function>
+
+  <xsl:function name="my:chapter-settings-ignore-head1">
+    <xsl:param name="config-file"/>
+    <xsl:copy-of copy-namespaces="no" select="$config-file/settings/chapter-page/ignore-head, $config-file/settings/generic-page/ignore-head"/>
+  </xsl:function>
+
   <xsl:variable name="chapter-settings-files" select="my:chapter-settings-files1($user-settings), my:chapter-settings-files1($system-settings)"/>
   <xsl:variable name="chapter-settings-macros" select="my:chapter-settings-macros1($user-settings), my:chapter-settings-macros1($system-settings)"/>
   <xsl:variable name="chapter-settings-header" select="(my:chapter-settings-header1($user-settings), my:chapter-settings-header1($system-settings))[1]/node()"/>
+  <xsl:variable name="chapter-settings-strip-style" select="(my:chapter-settings-strip-style1($user-settings), my:chapter-settings-strip-style1($system-settings))[1]/text()"/>
+  <xsl:variable name="chapter-settings-ignore-head" select="(my:chapter-settings-ignore-head1($user-settings), my:chapter-settings-ignore-head1($system-settings))[1]/text()"/>
 
   <!-- Load and pre-process the input file -->
 
@@ -199,11 +222,29 @@
   </xsl:template>
 
   <xsl:template mode="wrapper" match="html:head">
+    <xsl:param name="settings-ignore-head" tunnel="yes"/>
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates mode="wrapper" select="@*"/>
-      <xsl:copy-of copy-namespaces="no" select="$head"/>
+      <xsl:if test="$settings-ignore-head ne 'yes'">
+        <xsl:apply-templates mode="head" select="$head"/>
+      </xsl:if>
       <xsl:apply-templates mode="wrapper" select="node()"/>
     </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template mode="head" match="@*|node()">
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates mode="head" select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template mode="head" match="html:style">
+    <xsl:param name="settings-strip-style" tunnel="yes"/>
+    <xsl:if test="$settings-strip-style ne 'yes'">
+      <xsl:copy copy-namespaces="no">
+        <xsl:apply-templates mode="wrapper" select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="html:body">
@@ -324,6 +365,8 @@
         <xsl:with-param name="settings-files" select="$toc-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$toc-settings-macros" tunnel="yes"/>
         <xsl:with-param name="settings-header" select="$toc-settings-header" tunnel="yes"/>
+        <xsl:with-param name="settings-strip-style" select="$toc-settings-strip-style" tunnel="yes"/>
+        <xsl:with-param name="settings-ignore-head" select="$toc-settings-ignore-head" tunnel="yes"/>
       </xsl:apply-templates>
     </xsl:result-document>
   </xsl:template>
@@ -373,6 +416,8 @@
         <xsl:with-param name="settings-files" select="$chapter-settings-files" tunnel="yes"/>
         <xsl:with-param name="settings-macros" select="$chapter-settings-macros" tunnel="yes"/>
         <xsl:with-param name="settings-header" select="$chapter-settings-header" tunnel="yes"/>
+        <xsl:with-param name="settings-strip-style" select="$chapter-settings-strip-style" tunnel="yes"/>
+        <xsl:with-param name="settings-ignore-head" select="$chapter-settings-ignore-head" tunnel="yes"/>
         <xsl:with-param name="chapter" select="$chapter" tunnel="yes"/>
         <xsl:with-param name="chapter-attrs" select="$chapter-attrs" tunnel="yes"/>
         <xsl:with-param name="chapter-title" select="$chapter-title" tunnel="yes"/>
