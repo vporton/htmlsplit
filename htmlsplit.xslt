@@ -302,8 +302,7 @@
     <xsl:param name="next-uri" tunnel="yes"/>
     <xsl:if test="$next-uri">
       <a href="{$next-uri}">
-        <xsl:copy-of select="@*"/>
-        <xsl:apply-templates select="node()"/>
+        <xsl:apply-templates mode="wrapper" select="@*|node()"/>
       </a>
     </xsl:if>
   </xsl:template>
@@ -312,16 +311,14 @@
     <xsl:param name="prev-uri" tunnel="yes"/>
     <xsl:if test="$prev-uri">
       <a href="{$prev-uri}">
-        <xsl:copy-of select="@*"/>
-        <xsl:apply-templates select="node()"/>
+        <xsl:apply-templates mode="wrapper" select="@*|node()"/>
       </a>
     </xsl:if>
   </xsl:template>
 
   <xsl:template mode="wrapper" match="split:toc-ref">
     <a href="{$toc-filename}">
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="node()"/>
+      <xsl:apply-templates mode="wrapper" select="@*|node()"/>
     </a>
   </xsl:template>
 
