@@ -15,14 +15,13 @@
 
   <!-- Preliminary declarations -->
 
-  <!--xsl:output
-    method = "xhtml"
-    byte-order-mark = "no"
-    encoding = "utf-8"
-    indent = "no"
-    media-type = "text/html"
-    omit-xml-declaration = "yes"
-    version = "1.1" /-->
+  <!-- These settings work with most browsers, even HTML5. -->
+  <xsl:output method="xml"
+              byte-order-mark = "no"
+              doctype-system="about:legacy-compat"
+              omit-xml-declaration="yes"
+              encoding = "utf-8"
+              media-type = "text/html"/>
 
   <!-- Parameters -->
 
